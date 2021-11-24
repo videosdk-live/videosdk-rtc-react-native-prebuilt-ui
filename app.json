@@ -1,0 +1,8 @@
+{
+  "name": "ZujoNowApp",
+  "displayName": "ZujoNowApp",
+  "ios": {
+    "bundleIdentifier": "your bundle identifier",
+    "supportsTablet": true
+  }
+}

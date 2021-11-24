@@ -1,1 +1,0 @@
-# videosdk-rtc-react-native-prebuilt-ui
