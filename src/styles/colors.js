@@ -1,0 +1,13 @@
+export const RED = "#D32F2F";
+export const WHITE = "#FFF";
+export const WHITE_OPACITY_20 = "rgba(255,255,255, 0.2)";
+export const WHITE_OPACITY_50 = "rgba(255,255,255, 0.5)";
+export const BLACK = "#000";
+export const DARK_BACKGROUND = "#212032";
+export const DARK_BACKGROUND_50 = "rgba(33,32,50,0.5)";
+export const GRAYISH_BLUE = "#333244";
+export const DARK_BLUE = "#1C1F2E";
+export const DARK_BLUE_OPACITY_30 = "rgba(28,31,46,0.3)";
+export const GREY_OPACITY_20 = "rgba(112,112,112,0.2)";
+export const CYAN_BLUE = "#1178F8";
+export const BLUE_MAGENTA = "#2E2D3E";
