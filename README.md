@@ -3,7 +3,7 @@
    Follow [videosdk-rtc-nodejs-sdk-example](https://github.com/videosdk-live/videosdk-rtc-nodejs-sdk-example) to run authentication server.
 2. Clone the repo
    ```sh
-   $ git clone https://github.com/videosdk-live/videosdk-rtc-react-native-prebuilt-ui.git
+   git clone https://github.com/videosdk-live/videosdk-rtc-react-native-prebuilt-ui.git
    ```
 3. Update the api server url in the `src/config/api.js` file that points to the authentication server.
    ```
@@ -11,15 +11,15 @@
    ```
 5. Install NPM packages
    ```sh
-   $ npm install
+   npm install
    ```
 6. Run the app
    ```sh
-   $ npm run start
-   $ npm android
-   $ npm ios
+   npm run start
+   npm android
+   npm ios
    ```
-For more information, visit [official documentation](https://docs.videosdk.live/docs/video-on-demand/intro)
+For more information, visit [official documentation](https://docs.videosdk.live/docs/guide/video-and-audio-calling-api-sdk/getting-started)
 
 Related
 ---------
