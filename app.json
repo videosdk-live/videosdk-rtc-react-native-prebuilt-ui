@@ -1,6 +1,6 @@
 {
-  "name": "ZujoNowApp",
-  "displayName": "ZujoNowApp",
+  "name": "VideoSDKApp",
+  "displayName": "VideoSDK App",
   "ios": {
     "bundleIdentifier": "your bundle identifier",
     "supportsTablet": true
