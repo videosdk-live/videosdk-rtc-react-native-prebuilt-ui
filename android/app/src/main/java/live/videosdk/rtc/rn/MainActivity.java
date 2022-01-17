@@ -1,4 +1,4 @@
-package live.video.sdk;
+package live.videosdk.rtc.rn;
 
 import com.facebook.react.ReactActivity;
 
