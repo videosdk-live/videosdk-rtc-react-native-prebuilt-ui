@@ -10,8 +10,7 @@ const config = {
 };
 
 const linking = {
-  prefixes: ["https://*.zujonow.com/meeting/"],
+  prefixes: ["https://call.videosdk.live/", "call.videosdk.live/"],
   config,
 };
-
 export default linking;
