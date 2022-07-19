@@ -19,8 +19,8 @@ export default function ParticipantView({
   presstoHide,
   participantId,
 }) {
-  const onStreamEnabled = (stream) => {};
-  const onStreamDisabled = (stream) => {};
+  const onStreamEnabled = (stream) => { };
+  const onStreamDisabled = (stream) => { };
 
   const {
     displayName,
@@ -30,15 +30,16 @@ export default function ParticipantView({
     isLocal,
     setQuality,
     isActiveSpeaker,
+    setViewPort
   } = useParticipant(participantId, {
     onStreamEnabled,
     onStreamDisabled,
   });
 
-  useEffect(() => {
-    if (!quality) return;
-    setQuality(quality);
-  }, [quality]);
+  // useEffect(() => {
+  //   if (!quality) return;
+  //   setQuality(quality);
+  // }, [quality]);
 
   useEffect(() => {
     typeof webcamStream?.resume === "function" && webcamStream?.resume();
@@ -121,6 +122,13 @@ export default function ParticipantView({
         {webcamOn ? (
           <>
             <RTCView
+              onLayout={(event) => {
+                const { width, height } = event.nativeEvent.layout;
+                console.log({height, width});
+                if (!isLocal && webcamStream) {
+                  setViewPort(width, height);
+                }
+              }}
               streamURL={new MediaStream([webcamStream.track]).toURL()}
               objectFit={"cover"}
               mirror={isLocal ? true : false}
