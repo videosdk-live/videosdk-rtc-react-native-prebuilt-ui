@@ -45,7 +45,8 @@ export default function MeetingViewer({ videoOn }) {
 
   const [currentTabModes, setCurrentTabModes] = useState("");
   const [bottomVisible, setBottomVisible] = useState(false);
-  const [isLoading, setisLoading] = useState(true);
+  const [localParticipantAllowedJoin, setLocalParticipantAllowedJoin] =
+    useState(null);
 
   const bottomVisibleRef = useRef();
   const visibleTabViewerModalRef = useRef();
@@ -87,9 +88,24 @@ export default function MeetingViewer({ videoOn }) {
     }
   };
 
+  function onEntryResponded(participantId, decision) {
+    if (mMeetingRef.current?.localParticipant?.id === participantId) {
+      if (decision === "allowed") {
+        setLocalParticipantAllowedJoin(true);
+      } else {
+        setLocalParticipantAllowedJoin(false);
+        setTimeout(() => {
+          exitMeeting();
+        }, 3000);
+      }
+    }
+  }
+
   const mMeeting = useMeeting({
     onChatMessage: (d) =>
       _handleChatMessage(d, mMeetingRef.current?.localParticipant?.id),
+    onEntryResponded: (participantId, decision) =>
+      onEntryResponded(participantId, decision),
   });
 
   useEffect(() => {
@@ -186,7 +202,6 @@ export default function MeetingViewer({ videoOn }) {
     setTimeout(() => {
       StatusBar.setHidden(true);
       join();
-      setisLoading(false);
       videoOn && changeWebcam();
     }, 1000);
 
@@ -231,149 +246,161 @@ export default function MeetingViewer({ videoOn }) {
   };
 
   const height = useWindowDimensions().height / 2;
-  return !isLoading ? (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: Colors.DARK_BACKGROUND,
-      }}
-    >
-      {presenterId && isLandscape ? null : (
-        <HeaderMeetingViewer
-          setCurrentTabModes={setCurrentTabModes}
-          animeVal={animeVal}
-          exitMeeting={exitMeeting}
-        />
-      )}
-      {presenterId && !localScreenShareOn ? (
-        <ParticipantPresenter
-          presenterId={presenterId}
-          partCipantIDArr={filterPartCipantIDArr}
-          presstoHide={toggleBars}
-        />
-      ) : presenterId && localScreenShareOn ? (
-        <LocalParticipantPresenter
-          toggleBars={toggleBars}
-          localPresenterId={presenterId}
-          disableScreenShare={disableScreenShare}
-        />
-      ) : (
-        <ActiveParticipantsGrid
-          toggleBars={toggleBars}
-          isLandscape={isLandscape}
-        />
-      )}
-      {presenterId && isLandscape ? null : (
-        <BottomMeetingViewer
-          setCurrentTabModes={setCurrentTabModes}
-          currentTabModes={currentTabModes}
-          isLandscape={isLandscape}
-          showSnackBar={showSnackBar}
-          animeVal={animeVal}
-          ref={bottomRef}
-          exitMeeting={exitMeeting}
-        />
-      )}
 
-      <ModalViewer
-        visibleTabViewerModal={visibleTabViewerModal}
-        setvisibleTabViewerModal={setvisibleTabViewerModal}
-        tabIndex={tabIndex}
-        partCipantIDArr={partCipantIDArr}
-        currentTabModes={currentTabModes}
-        setCurrentTabModes={setCurrentTabModes}
-      />
-
-      <ActionSheet
-        containerStyle={{
-          backgroundColor: Colors.BLUE_MAGENTA,
-          borderTopLeftRadius: 15,
-          borderTopRightRadius: 15,
+  return typeof localParticipantAllowedJoin === "boolean" ? (
+    localParticipantAllowedJoin ? (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: Colors.DARK_BACKGROUND,
         }}
-        dialogStyle={{ backgroundColor: "transparent" }}
-        renderTitle={() => (
-          <View
-            style={{
-              justifyContent: "space-between",
-              height: 50,
-              borderBottomWidth: 1,
-              borderBottomColor: Colors.GREY_OPACITY_20,
-            }}
-          >
+      >
+        {presenterId && isLandscape ? null : (
+          <HeaderMeetingViewer
+            setCurrentTabModes={setCurrentTabModes}
+            animeVal={animeVal}
+            exitMeeting={exitMeeting}
+          />
+        )}
+        {presenterId && !localScreenShareOn ? (
+          <ParticipantPresenter
+            presenterId={presenterId}
+            partCipantIDArr={filterPartCipantIDArr}
+            presstoHide={toggleBars}
+          />
+        ) : presenterId && localScreenShareOn ? (
+          <LocalParticipantPresenter
+            toggleBars={toggleBars}
+            localPresenterId={presenterId}
+            disableScreenShare={disableScreenShare}
+          />
+        ) : (
+          <ActiveParticipantsGrid
+            toggleBars={toggleBars}
+            isLandscape={isLandscape}
+          />
+        )}
+        {presenterId && isLandscape ? null : (
+          <BottomMeetingViewer
+            setCurrentTabModes={setCurrentTabModes}
+            currentTabModes={currentTabModes}
+            isLandscape={isLandscape}
+            showSnackBar={showSnackBar}
+            animeVal={animeVal}
+            ref={bottomRef}
+            exitMeeting={exitMeeting}
+          />
+        )}
+
+        <ModalViewer
+          visibleTabViewerModal={visibleTabViewerModal}
+          setvisibleTabViewerModal={setvisibleTabViewerModal}
+          tabIndex={tabIndex}
+          partCipantIDArr={partCipantIDArr}
+          currentTabModes={currentTabModes}
+          setCurrentTabModes={setCurrentTabModes}
+        />
+
+        <ActionSheet
+          containerStyle={{
+            backgroundColor: Colors.BLUE_MAGENTA,
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15,
+          }}
+          dialogStyle={{ backgroundColor: "transparent" }}
+          renderTitle={() => (
             <View
               style={{
                 justifyContent: "space-between",
-                flexDirection: "row",
-                padding: 14,
+                height: 50,
+                borderBottomWidth: 1,
+                borderBottomColor: Colors.GREY_OPACITY_20,
               }}
             >
-              <Button
-                size={Button.sizes.small}
-                avoidMinWidth
-                avoidInnerPadding
-                onPress={() => {
-                  settabIndex(
-                    currentTabModes === TAB_COMPONENT_MODES.CHAT ? 1 : 0
-                  );
-                  setvisibleTabViewerModal(true);
-                  setTimeout(() => {
-                    dismissSheet();
-                  }, 500);
-                }}
+              <View
                 style={{
-                  height: 25,
-                  aspectRatio: 1,
-                  marginHorizontal: 4,
-                  backgroundColor: Colors.GREY_OPACITY_20,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  justifyContent: "space-between",
+                  flexDirection: "row",
+                  padding: 14,
                 }}
               >
-                <KeyboardArrowUp fill={Colors.WHITE} />
-              </Button>
-              <Text
-                style={{
-                  fontSize: convertRFValue(14),
-                  color: Colors.WHITE,
-                  fontFamily: ROBOTO_FONTS.RobotoMedium,
-                }}
-              >
-                {actionSheetTitle}
-              </Text>
+                <Button
+                  size={Button.sizes.small}
+                  avoidMinWidth
+                  avoidInnerPadding
+                  onPress={() => {
+                    settabIndex(
+                      currentTabModes === TAB_COMPONENT_MODES.CHAT ? 1 : 0
+                    );
+                    setvisibleTabViewerModal(true);
+                    setTimeout(() => {
+                      dismissSheet();
+                    }, 500);
+                  }}
+                  style={{
+                    height: 25,
+                    aspectRatio: 1,
+                    marginHorizontal: 4,
+                    backgroundColor: Colors.GREY_OPACITY_20,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <KeyboardArrowUp fill={Colors.WHITE} />
+                </Button>
+                <Text
+                  style={{
+                    fontSize: convertRFValue(14),
+                    color: Colors.WHITE,
+                    fontFamily: ROBOTO_FONTS.RobotoMedium,
+                  }}
+                >
+                  {actionSheetTitle}
+                </Text>
 
-              <Button
-                size={Button.sizes.small}
-                avoidMinWidth
-                avoidInnerPadding
-                borderRadius={6}
-                onPress={dismissSheet}
-                style={{
-                  height: 30,
-                  aspectRatio: 1,
-                  backgroundColor: Colors.BLUE_MAGENTA,
-                }}
-              >
-                <Close fill={"#9FA0A7"} />
-              </Button>
+                <Button
+                  size={Button.sizes.small}
+                  avoidMinWidth
+                  avoidInnerPadding
+                  borderRadius={6}
+                  onPress={dismissSheet}
+                  style={{
+                    height: 30,
+                    aspectRatio: 1,
+                    backgroundColor: Colors.BLUE_MAGENTA,
+                  }}
+                >
+                  <Close fill={"#9FA0A7"} />
+                </Button>
+              </View>
             </View>
-          </View>
-        )}
-        renderAction={() => {
-          return currentTabModes === TAB_COMPONENT_MODES.PARTICIPANTS ? (
-            <ParticipantsViewer height={height} />
-          ) : (
-            <ChatViewer isLandscape={isLandscape} containerStyle={{ height }} />
-          );
-        }}
-        visible={bottomVisible}
-        options={[{}]}
-        onDismiss={dismissSheet}
+          )}
+          renderAction={() => {
+            return currentTabModes === TAB_COMPONENT_MODES.PARTICIPANTS ? (
+              <ParticipantsViewer height={height} />
+            ) : (
+              <ChatViewer
+                isLandscape={isLandscape}
+                containerStyle={{ height }}
+              />
+            );
+          }}
+          visible={bottomVisible}
+          options={[{}]}
+          onDismiss={dismissSheet}
+        />
+      </SafeAreaView>
+    ) : (
+      <LoaderScreen
+        color={Colors.WHITE}
+        message="Entry denied!"
+        messageStyle={{ color: Colors.WHITE }}
       />
-    </SafeAreaView>
+    )
   ) : (
     <LoaderScreen
       color={Colors.WHITE}
-      message="Loading Participants..."
+      message="Waiting to join..."
       messageStyle={{ color: Colors.WHITE }}
     />
   );

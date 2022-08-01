@@ -124,7 +124,6 @@ export default function ParticipantView({
             <RTCView
               onLayout={(event) => {
                 const { width, height } = event.nativeEvent.layout;
-                console.log({height, width});
                 if (!isLocal && webcamStream) {
                   setViewPort(width, height);
                 }
