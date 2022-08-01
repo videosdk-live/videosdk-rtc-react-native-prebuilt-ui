@@ -19,8 +19,8 @@ export default function ParticipantView({
   presstoHide,
   participantId,
 }) {
-  const onStreamEnabled = (stream) => { };
-  const onStreamDisabled = (stream) => { };
+  const onStreamEnabled = (stream) => {};
+  const onStreamDisabled = (stream) => {};
 
   const {
     displayName,
@@ -30,7 +30,7 @@ export default function ParticipantView({
     isLocal,
     setQuality,
     isActiveSpeaker,
-    setViewPort
+    setViewPort,
   } = useParticipant(participantId, {
     onStreamEnabled,
     onStreamDisabled,
@@ -124,7 +124,6 @@ export default function ParticipantView({
             <RTCView
               onLayout={(event) => {
                 const { width, height } = event.nativeEvent.layout;
-                console.log({height, width});
                 if (!isLocal && webcamStream) {
                   setViewPort(width, height);
                 }
