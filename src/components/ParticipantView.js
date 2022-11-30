@@ -10,7 +10,7 @@ import { Colors } from "../styles";
 import { convertRFValue } from "../styles/spacing";
 import { MicOff } from "../assets/icons";
 import Avatar from "./Avatar";
-import LottieView from "lottie-react-native";
+// import LottieView from "lottie-react-native";
 import { AnimatableManager } from "react-native-ui-lib";
 import * as Animatable from "react-native-animatable";
 
@@ -147,12 +147,12 @@ export default function ParticipantView({
                   borderRadius: 16,
                 }}
               >
-                <LottieView
+                {/* <LottieView
                   autoPlay={true}
                   loop={true}
                   style={{ height: 30, aspectRatio: 1 }}
                   source={require("../assets/audioAnalyzer.json")}
-                />
+                /> */}
               </View>
             ) : !micOn ? (
               <MicStatusComponent />
@@ -183,13 +183,13 @@ export default function ParticipantView({
                   borderRadius: 40,
                 }}
               />
-              {micOn ? (
+              {/* {micOn ? (
                 <LottieView
                   autoPlay={true}
                   loop={true}
                   source={require("../assets/audioPower.json")}
                 />
-              ) : null}
+              ) : null} */}
             </View>
 
             <DisplayNameComponent />

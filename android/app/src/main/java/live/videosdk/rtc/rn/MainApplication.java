@@ -14,7 +14,6 @@ import java.util.List;
 import live.videosdk.rnfgservice.ForegroundServicePackage;
 import live.videosdk.rnincallmanager.InCallManagerPackage;
 import live.videosdk.rnwebrtc.WebRTCModulePackage;
-import com.airbnb.android.react.lottie.LottiePackage;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -32,7 +31,6 @@ public class MainApplication extends Application implements ReactApplication {
           packages.add(new ForegroundServicePackage());
           packages.add(new InCallManagerPackage());
           packages.add(new WebRTCModulePackage());
-          packages.add(new LottiePackage());
 
           return packages;
         }

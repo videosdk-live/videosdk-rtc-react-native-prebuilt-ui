@@ -12,3 +12,5 @@
 -keep class com.facebook.jni.** { *; }
 -keep public class com.horcrux.svg.** {*;}
 -keep class org.webrtc.** { *; }
+-keep class com.swmansion.reanimated.** { *; }
+-keep class com.facebook.react.turbomodule.** { *; }

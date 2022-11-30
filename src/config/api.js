@@ -1,4 +1,4 @@
-const HOST_URL = "localhost:9000";
+const API_BASE_URL = "https://api.videosdk.live/v2";
 
 export const getToken = async () => {
   try {
@@ -18,7 +18,7 @@ export const getToken = async () => {
 
 export const createMeeting = async (token) => {
   try {
-    const VIDEOSDK_API_ENDPOINT = `${HOST_URL}/create-meeting`;
+    const VIDEOSDK_API_ENDPOINT = `${API_BASE_URL}/rooms`;
     const options = {
       method: "POST",
       headers: {

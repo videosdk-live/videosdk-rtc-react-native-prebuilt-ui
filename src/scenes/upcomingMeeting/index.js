@@ -34,9 +34,9 @@ export default function UpComingMeeting({ navigation }) {
   };
 
   useEffect(() => {
-    Linking.addEventListener("url", _handleLinkingListner);
+    const l = Linking.addEventListener("url", _handleLinkingListner);
     return () => {
-      Linking.removeEventListener("url", _handleLinkingListner);
+      l.remove();
     };
   }, []);
 

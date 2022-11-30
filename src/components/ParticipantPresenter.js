@@ -22,27 +22,13 @@ export default function ParticipantPresenter({
 
   const onStreamEnabled = (stream) => {};
   const onStreamDisabled = (stream) => {};
-  const {
-    displayName,
-    participant,
-    webcamStream,
-    micStream,
-    screenShareStream,
-    webcamOn,
-    micOn,
-    screenShareOn,
-    isLocal,
-    isActiveSpeaker,
-    // isMainParticipant,
-    setQuality,
-    enableMic,
-    disableMic,
-    enableWebcam,
-    disableWebcam,
-  } = useParticipant(presenterId, {
-    onStreamEnabled,
-    onStreamDisabled,
-  });
+  const { displayName, screenShareStream, screenShareOn } = useParticipant(
+    presenterId,
+    {
+      onStreamEnabled,
+      onStreamDisabled,
+    }
+  );
 
   const presentingText = displayName || "";
   return (
@@ -120,7 +106,6 @@ export default function ParticipantPresenter({
             right: 0,
             left: 0,
             bottom: 0,
-            // backgroundColor: "red",
           }}
         />
       </View>

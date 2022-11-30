@@ -29,16 +29,14 @@ export default function App() {
     }, 1000);
   }, []);
 
-  return splashVisible ? (
-    <SplashScreen />
-  ) : (
+  return (
     <NavigationContainer linking={linking}>
       <RootStack.Navigator
         mode="modal"
         screenOptions={{
           animationEnabled: false,
         }}
-        initialRouteName={SCREEN_NAMES.UpcomingMeeting}
+        initialRouteName={SCREEN_NAMES.MeetingInfo}
       >
         <RootStack.Screen
           name={SCREEN_NAMES.UpcomingMeeting}

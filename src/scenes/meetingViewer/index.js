@@ -155,9 +155,12 @@ export default function MeetingViewer({ videoOn }) {
   };
 
   useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", onHardwareBackPress);
+    const back = BackHandler.addEventListener(
+      "hardwareBackPress",
+      onHardwareBackPress
+    );
     return () => {
-      BackHandler.removeEventListener("hardwareBackPress", onHardwareBackPress);
+      back.remove();
     };
   }, []);
 

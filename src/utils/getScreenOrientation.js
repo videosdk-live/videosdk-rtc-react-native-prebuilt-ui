@@ -12,9 +12,9 @@ export default function getScreenOrientation() {
     }
   };
   useEffect(() => {
-    Dimensions.addEventListener("change", setOrientation);
+    const dm = Dimensions.addEventListener("change", setOrientation);
     return () => {
-      Dimensions.removeEventListener("change", setOrientation);
+      dm.remove();
     };
   });
 
