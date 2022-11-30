@@ -42,7 +42,7 @@ export default function MeetingInfo({ navigation }) {
 
   const [tracks, setTrack] = useState("");
 
-  useEffect(async () => {
+  useEffect(() => {
     mediaDevices
       .getUserMedia({ audio: true, video: true })
       .then((stream) => {
