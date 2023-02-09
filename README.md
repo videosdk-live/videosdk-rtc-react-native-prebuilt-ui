@@ -19,7 +19,7 @@
    npm android
    npm ios
    ```
-For more information, visit [official documentation](https://docs.videosdk.live/docs/guide/video-and-audio-calling-api-sdk/getting-started)
+For more information, visit [official documentation](https://docs.videosdk.live/react-native/guide/video-and-audio-calling-api-sdk/getting-started)
 
 Related
 ---------
